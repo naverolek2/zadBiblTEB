@@ -38,12 +38,7 @@
             else {
                 echo "Nie znaleziono książek.";
             }
-            
             }
-            
-        
-            
-
         }
 
         $conn->close();
