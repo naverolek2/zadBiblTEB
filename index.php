@@ -13,7 +13,7 @@
     <input type="text" name="search" id="search">
     <input type="submit" value="Search"><br>
     <?php 
-        $conn = new mysqli('localhost', 'root', '', 'bibiliotekateb');
+        $conn = new mysqli('localhost', 'root', '', 'bibliotekateb');
         if(!$conn) {
             die("Połączenie nie powiodło się");
         }
@@ -22,14 +22,14 @@
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // search to nazwa inputu powyżej.
             $searchTerm = $_POST["search"];
-            $sql = "SELECT * FROM ksiazki WHERE tytul LIKE '%$searchTerm%'";
+            $sql = "SELECT ksiazki.id, ksiazki.tytul, autor.imie, autor.nazwisko, ksiazki.rok_publikacji FROM ksiazki JOIN autor ON ksiazki.autor_id = autor.id WHERE ksiazki.tytul LIKE '%$searchTerm%'";
             $result = $conn->query($sql);
             if (mysqli_num_rows($result) > 0) {
                 // to po to żeby wszystkie książki co pasują wyświetlić, bo bez tego wyświetla się tylko jedna
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "ID: " . $row["id"] . "<br>";
                     echo "Tytuł: " . $row["tytul"] . "<br>";
-                    echo "Autor: " . $row["autor"] . "<br>";
+                    echo "Autor: " . $row["imie"] . " " . $row["nazwisko"] . "<br>";
                     echo "Rok publikacji: " . $row["rok_publikacji"] . "<br>";
                     echo "<br>";
                 }
